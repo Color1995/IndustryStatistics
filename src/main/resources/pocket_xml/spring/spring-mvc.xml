@@ -45,7 +45,7 @@
 
 
     <!-- 自动扫描装配 -->
-    <context:component-scan base-package="com.anui.blog.*.controller"/>
+    <context:component-scan base-package="cn.com.trueway.*.controller"/>
 
     <!-- 配置多文件上传 -->
     <bean id="multipartResolver"
