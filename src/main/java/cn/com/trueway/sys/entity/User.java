@@ -14,35 +14,28 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 3469343540723236423L;
 	
 	private String guid;
-	private String accountName;
-	private String loginName;
-	private String loginPassword;
-	private Integer userGender;
-	private String userPhone;
-	private String userPhoto;
-	private String userEmail;
-	private Integer userStatus;
-	private Integer userRole;
-	private Integer userSort;
+	private String account;
+	private String password;
+	private String username;
+	private String gender;
+	private Integer phone;
+	private Integer status;
+	private Integer role;
+	private Integer sort;
 	private String remark;
-	private Date createdTime;
-	private Date modifiedTime;
-	private String modifiedUser;
-	private String uuidSalt;
+	private String email;
+	private Date created_time;
+	private Date modified_time;
+	private String created_user;
+	private String modified_user;
+	private String uuidsalt;
+	private String photo;
 	private String reserved;
 
 	public User() {
 		super();
 	}
 
-	/**
-	 * 用来封装reg时的User对象
-	 * @param username
-	 * @param password
-	 * @param gender
-	 * @param phone
-	 * @param email
-	 */
 	public String getGuid() {
 		return guid;
 	}
@@ -51,84 +44,68 @@ public class User implements Serializable {
 		this.guid = guid;
 	}
 
-	public String getAccountName() {
-		return accountName;
+	public String getAccount() {
+		return account;
 	}
 
-	public void setAccountName(String accountName) {
-		this.accountName = accountName;
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
-	public String getLoginName() {
-		return loginName;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public String getLoginPassword() {
-		return loginPassword;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setLoginPassword(String loginPassword) {
-		this.loginPassword = loginPassword;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public Integer getUserGender() {
-		return userGender;
+	public String getGender() {
+		return gender;
 	}
 
-	public void setUserGender(Integer userGender) {
-		this.userGender = userGender;
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
-	public String getUserPhone() {
-		return userPhone;
+	public Integer getPhone() {
+		return phone;
 	}
 
-	public void setUserPhone(String userPhone) {
-		this.userPhone = userPhone;
+	public void setPhone(Integer phone) {
+		this.phone = phone;
 	}
 
-	public String getUserPhoto() {
-		return userPhoto;
+	public Integer getStatus() {
+		return status;
 	}
 
-	public void setUserPhoto(String userPhoto) {
-		this.userPhoto = userPhoto;
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
-	public String getUserEmail() {
-		return userEmail;
+	public Integer getRole() {
+		return role;
 	}
 
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+	public void setRole(Integer role) {
+		this.role = role;
 	}
 
-	public Integer getUserStatus() {
-		return userStatus;
+	public Integer getSort() {
+		return sort;
 	}
 
-	public void setUserStatus(Integer userStatus) {
-		this.userStatus = userStatus;
-	}
-
-	public Integer getUserRole() {
-		return userRole;
-	}
-
-	public void setUserRole(Integer userRole) {
-		this.userRole = userRole;
-	}
-
-	public Integer getUserSort() {
-		return userSort;
-	}
-
-	public void setUserSort(Integer userSort) {
-		this.userSort = userSort;
+	public void setSort(Integer sort) {
+		this.sort = sort;
 	}
 
 	public String getRemark() {
@@ -139,36 +116,60 @@ public class User implements Serializable {
 		this.remark = remark;
 	}
 
-	public Date getCreatedTime() {
-		return createdTime;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setCreatedTime(Date createdTime) {
-		this.createdTime = createdTime;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public Date getModifiedTime() {
-		return modifiedTime;
+	public Date getCreated_time() {
+		return created_time;
 	}
 
-	public void setModifiedTime(Date modifiedTime) {
-		this.modifiedTime = modifiedTime;
+	public void setCreated_time(Date created_time) {
+		this.created_time = created_time;
 	}
 
-	public String getModifiedUser() {
-		return modifiedUser;
+	public Date getModified_time() {
+		return modified_time;
 	}
 
-	public void setModifiedUser(String modifiedUser) {
-		this.modifiedUser = modifiedUser;
+	public void setModified_time(Date modified_time) {
+		this.modified_time = modified_time;
 	}
 
-	public String getUuidSalt() {
-		return uuidSalt;
+	public String getCreated_user() {
+		return created_user;
 	}
 
-	public void setUuidSalt(String uuidSalt) {
-		this.uuidSalt = uuidSalt;
+	public void setCreated_user(String created_user) {
+		this.created_user = created_user;
+	}
+
+	public String getModified_user() {
+		return modified_user;
+	}
+
+	public void setModified_user(String modified_user) {
+		this.modified_user = modified_user;
+	}
+
+	public String getUuidsalt() {
+		return uuidsalt;
+	}
+
+	public void setUuidsalt(String uuidsalt) {
+		this.uuidsalt = uuidsalt;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
 	public String getReserved() {
@@ -178,7 +179,4 @@ public class User implements Serializable {
 	public void setReserved(String reserved) {
 		this.reserved = reserved;
 	}
-
-
-	
 }
