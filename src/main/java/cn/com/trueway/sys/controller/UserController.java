@@ -40,7 +40,7 @@ public class UserController extends BaseController {
 		System.out.println("--------------login in-----------");
 		String user_account = account;
 		try {
-			User user = userService.findUserByLoginname(account);
+			User user = userService.findUserByAccount(account);
 			//		System.out.println("pp" + password);
 			if(password.equals(user.getPassword())) {
 				rr.setState(1);

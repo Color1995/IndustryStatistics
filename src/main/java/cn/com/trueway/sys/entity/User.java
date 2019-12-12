@@ -5,14 +5,14 @@ import java.util.Date;
 
 /**
  * 实体类User,用来存放用户信息的相关数据。
- * 
+ *
  * @author JiuGe
  *
  */
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 3469343540723236423L;
-	
+
 	private String guid;
 	private String account;
 	private String password;
@@ -178,5 +178,29 @@ public class User implements Serializable {
 
 	public void setReserved(String reserved) {
 		this.reserved = reserved;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"guid='" + guid + '\'' +
+				", account='" + account + '\'' +
+				", password='" + password + '\'' +
+				", username='" + username + '\'' +
+				", gender='" + gender + '\'' +
+				", phone=" + phone +
+				", status=" + status +
+				", role=" + role +
+				", sort=" + sort +
+				", remark='" + remark + '\'' +
+				", email='" + email + '\'' +
+				", created_time=" + created_time +
+				", modified_time=" + modified_time +
+				", created_user='" + created_user + '\'' +
+				", modified_user='" + modified_user + '\'' +
+				", uuidsalt='" + uuidsalt + '\'' +
+				", photo='" + photo + '\'' +
+				", reserved='" + reserved + '\'' +
+				'}';
 	}
 }

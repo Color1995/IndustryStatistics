@@ -12,9 +12,9 @@ import cn.com.trueway.sys.entity.User;
 public interface IUserService {
 	
 	/**	
-	 * @param loginName
+	 * @param account
 	 * @return User
 	 */
-	User findUserByLoginname(String loginName);
+	User findUserByAccount(String account);
 	
 }

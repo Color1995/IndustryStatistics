@@ -12,19 +12,15 @@
         (2)提供一些列：数据绑定，数字和日期的format @NumberFormat, @DateTimeFormat, xml,json默认读写支持
     -->
 
-    <!-- 配置注解驱动 可以将request参数与绑定到controller参数上 -->
-    <mvc:annotation-driven/>
+    <!-- 自动扫描装配 -->
+    <!--开启注解扫描，只扫描Controller注解-->
+    <context:component-scan base-package="cn.com.trueway.*.controller">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
 
     <!--启用spring的一些annotation -->
     <!-- 这个使用来激活注册的Bean，简单来讲就是使Ioc工作起来 -->
     <context:annotation-config/>
-
-    <!-- 2.静态资源默认servlet配置
-		(1)加入对静态资源的处理：js,gif,png
-		(2)允许使用"/"做整体映射
-	 -->
-    <mvc:default-servlet-handler/>
-
 
     <!-- 对模型视图名称的解析，即在模型视图名称添加前后缀(如果最后一个还是表示文件夹,则最后的斜杠不要漏了) 使用JSP-->
     <!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
@@ -42,10 +38,8 @@
     <mvc:resources mapping="/image/**" location="/statics/img/"/>
     <mvc:default-servlet-handler />  <!--这句要加上，要不然可能会访问不到静态资源，具体作用自行百度-->
 
-
-
-    <!-- 自动扫描装配 -->
-    <context:component-scan base-package="cn.com.trueway.*.controller"/>
+    <!-- 配置注解驱动 可以将request参数与绑定到controller参数上 -->
+    <mvc:annotation-driven/>
 
     <!-- 配置多文件上传 -->
     <bean id="multipartResolver"

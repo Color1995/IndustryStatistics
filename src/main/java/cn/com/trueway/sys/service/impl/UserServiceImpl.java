@@ -22,10 +22,10 @@ public class UserServiceImpl implements IUserService {
 	private UserMapper userMapper;
 
 	@Override
-	public User findUserByLoginname(String loginName) throws UsernameNotFoundException{
+	public User findUserByAccount(String account) throws UsernameNotFoundException{
 		// 判断用户是否存在
-		User user = userMapper.findUserByLoginname(loginName);
-		
+		User user = userMapper.findUserByAccount(account);
+		System.out.println(user);
 		if(user != null) {
 			return user;
 		} else {

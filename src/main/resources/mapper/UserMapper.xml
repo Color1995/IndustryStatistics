@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
@@ -6,11 +6,11 @@
 
 	<!-- 根据用户id查找用户信息 -->
 	<!-- User findUserByLoginname(String name) -->
-	<select id="findUserByLoginname" resultType="cn.com.trueway.sys.entity.User" >
+	<select id="findUserByAccount" resultType="cn.com.trueway.sys.entity.User" >
 		SELECT
-		guid, t.login_name as loginName, t.login_password as loginPassword
+		guid, t.ACCOUNT as account, t.USERNAME as username, t.PASSWORD as password
 		FROM T_USERS t
-		WHERE login_name = #{loginName,jdbcType=VARCHAR}
+		WHERE account = #{account,jdbcType=VARCHAR}
 	</select>
 	
 </mapper>
