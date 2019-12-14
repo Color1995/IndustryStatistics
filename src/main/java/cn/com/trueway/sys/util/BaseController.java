@@ -15,6 +15,6 @@ public abstract class BaseController {
 	 */
 	protected final Integer getUidFromSession(HttpSession session) {
 		
-		return Integer.valueOf(session.getAttribute("Id").toString());
+		return Integer.valueOf(session.getAttribute("user_id").toString());
 	}
 }

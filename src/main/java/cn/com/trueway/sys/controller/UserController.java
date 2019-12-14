@@ -14,19 +14,33 @@ import cn.com.trueway.sys.service.IUserService;
 import cn.com.trueway.sys.util.BaseController;
 import cn.com.trueway.sys.util.ResponseResult;
 
+/**
+ * @author Color1995
+ * @email midwayking@163.com
+ * @time 2019.12.15 01:16
+ * @notes 重写
+ */
+
 @Controller
 @RequestMapping("/user")
 public class UserController extends BaseController {
 
 	/**
-	 * @author Color1995
-	 * @email midwayking@163.com
+	 * 此Controller共有四个方法。
+	 * 登录、注册、修改密码、注销
 	 *
 	 */
 
 	@Autowired
 	private IUserService userService;
 
+	/**
+	 *
+	 * @param account
+	 * @param password
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value="/login.do", method={RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
 	public ResponseResult<Void> login(
@@ -35,26 +49,29 @@ public class UserController extends BaseController {
 			HttpSession session) {
 
 		// 声明返回值
-		ResponseResult<Void> rr = new ResponseResult<Void>();
+		ResponseResult<Void> result = new ResponseResult<Void>();
 
-		System.out.println("--------------login in-----------");
+		System.out.println("----------login check-----------");
+		// 获取用户名账号和密码
 		String user_account = account;
+		String user_password = password;
 		try {
 			User user = userService.findUserByAccount(account);
-			//		System.out.println("pp" + password);
+			// 判断密码是否相同
 			if(password.equals(user.getPassword())) {
-				rr.setState(1);
-				session.setAttribute("Id", user.getGuid());
-				session.setAttribute("username", user.getAccount());
+				result.setState(1);
+				// 将用户唯一id和账户名存入session
+				session.setAttribute("user_id", user.getGuid());
+				session.setAttribute("user_account", user.getAccount());
 			}else {
-				rr.setState(0);
-				rr.setMessage("用户名或密码不正确！");
+				result.setState(0);
+				result.setMessage("用户名或密码不正确！");
 			}
 		} catch (Exception e) {
-			rr.setState(ResponseResult.STATE_ERROR);
-			rr.setMessage("用户名或密码不正确！");
+			result.setState(ResponseResult.STATE_ERROR);
+			result.setMessage("用户名或密码不正确！");
 		}
-		return rr;
+		return result;
 	}
 
 	@RequestMapping(value="/index-all.do")
