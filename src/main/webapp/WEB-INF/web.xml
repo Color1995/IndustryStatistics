@@ -15,7 +15,7 @@
     <!--设置配置文件的路径-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:pocket_xml/spring/applicationContext.xml</param-value>
+        <param-value>classpath:all_xml/spring/applicationContext.xml</param-value>
     </context-param>
 
     <!--配置前端控制器-->
@@ -27,7 +27,7 @@
         <init-param>
             <!--配置dispatcher.xml作为mvc的配置文件-->
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:pocket_xml/spring/spring-mvc.xml</param-value>
+            <param-value>classpath:all_xml/spring/spring-mvc.xml</param-value>
         </init-param>
         <!--启动服务器，创建该servlet-->
         <load-on-startup>1</load-on-startup>

@@ -2,6 +2,7 @@ package cn.com.trueway.sys.controller;
 
 import javax.servlet.http.HttpSession;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import cn.com.trueway.sys.util.ResponseResult;
  * @notes 重写
  */
 
+@Slf4j
 @Controller
 @RequestMapping("/user")
 public class UserController extends BaseController {
@@ -63,9 +65,11 @@ public class UserController extends BaseController {
 				// 将用户唯一id和账户名存入session
 				session.setAttribute("user_id", user.getGuid());
 				session.setAttribute("user_account", user.getAccount());
+				log.debug("登陆成功");
 			}else {
 				result.setState(0);
 				result.setMessage("用户名或密码不正确！");
+				log.debug("用户名或密码不正确！");
 			}
 		} catch (Exception e) {
 			result.setState(ResponseResult.STATE_ERROR);

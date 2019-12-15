@@ -43,7 +43,7 @@ public class LoginFilter implements Filter {
          *  || url.indexOf("resource") > 0 || url.indexOf("note") > 0
          */
         if (path.contains("login.do")) {
-            System.out.println("filter！");
+//            System.out.println("filter！");
             filterChain.doFilter(request, response); // 放行
             return;
         }
