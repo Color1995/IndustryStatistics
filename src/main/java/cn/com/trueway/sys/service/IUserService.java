@@ -12,9 +12,16 @@ import cn.com.trueway.sys.entity.User;
 public interface IUserService {
 	
 	/**	
+	 * 根据账号查找出User
 	 * @param account
 	 * @return User
 	 */
 	User findUserByAccount(String account);
-	
+
+	/**
+	 * 为loginFilter准备,优化代码
+	 * @param account
+	 * @return user_id
+	 */
+	String findUserIdByAccount(String account);
 }

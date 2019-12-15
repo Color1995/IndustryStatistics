@@ -2,7 +2,6 @@ package cn.com.trueway.sys.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import cn.com.trueway.sys.entity.User;
 import cn.com.trueway.sys.mapper.UserMapper;
 import cn.com.trueway.sys.service.IUserService;
@@ -25,13 +24,26 @@ public class UserServiceImpl implements IUserService {
 	public User findUserByAccount(String account) throws UsernameNotFoundException{
 		// 判断用户是否存在
 		User user = userMapper.findUserByAccount(account);
-		System.out.println(user);
+		// System.out.println(user);
 		if(user != null) {
 			return user;
 		} else {
 			throw new UsernameNotFoundException("用户名不存在！");
 		}
 		
+	}
+
+	/**
+	 * 为loginFilter准备,优化代码
+	 *
+	 * @param account
+	 * @return user_id
+	 */
+	@Override
+	public String findUserIdByAccount(String account) {
+		String user_id = userMapper.findUserIdByAccount(account);
+		// System.out.println(user_id);
+		return user_id;
 	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -31,28 +32,40 @@ public class LoginFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String path = request.getServletPath();
         String url = request.getRequestURI();
+        HttpSession session = request.getSession();
 
+        System.out.println("path: " + path);
+        System.out.println("url: " + url);
         // 如果不需要过滤的静态文件，直接放行。
-        if (path.contains("login") || path.contains("/js/") || path.contains("/images/") || path.contains("/image/")
-                || path.contains("/img/") || path.contains("/css/") || path.contains("message.jsp")
-                || path.contains("404.jsp") ) {
+        /**
+         *  其他参数：
+         *  path.endsWith(".css") || path.endsWith(".js")
+         *  || url.indexOf("resource") > 0 || url.indexOf("note") > 0
+         */
+        if (path.contains("login.do")) {
+            System.out.println("filter！");
             filterChain.doFilter(request, response); // 放行
             return;
         }
 
         // 判断用户账号和id是否正确
-        String user_id = (String) request.getSession().getAttribute("user_id");
-        String user_account = (String) request.getSession().getAttribute("user_account");
+        String user_id = (String) session.getAttribute("user_id");
+        String user_account = (String) session.getAttribute("user_account");
         if(StringUtils.isNotEmpty(user_account)){
-            //TODO 建议用新方法值查出一个Id值 优化
-            User user = userService.findUserByAccount(user_account);
-            if (user.getGuid() != user_id) {
+            System.out.println("filter.do");
+            // 建议用新方法值查出一个Id值 优化
+            String id = userService.findUserIdByAccount(user_account);
+            if (id != user_id) {
                 // 未登录，重定向到404，message:未登录, 界面两秒后跳出未登录。
-                response.sendRedirect(request.getContextPath() + "/error/404.jsp");
+                response.sendRedirect(request.getContextPath() + "/error/404.html");
             } else {
                 filterChain.doFilter(request,response);
             }
+        } else {
+            // 未登录，重定向到404，message:未登录, 界面两秒后跳出未登录。
+            response.sendRedirect(request.getContextPath() + "/error/404.html");
         }
+
     }
 
     @Override

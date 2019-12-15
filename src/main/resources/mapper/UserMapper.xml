@@ -4,13 +4,22 @@
 
 <mapper namespace="cn.com.trueway.sys.mapper.UserMapper">
 
-	<!-- 根据用户id查找用户信息 -->
-	<!-- User findUserByLoginname(String name) -->
+	<!-- 根据用户account查找用户信息 -->
+	<!-- User findUserByLoginname(String account) -->
 	<select id="findUserByAccount" resultType="cn.com.trueway.sys.entity.User" >
 		SELECT
 		guid, t.ACCOUNT as account, t.USERNAME as username, t.PASSWORD as password
 		FROM T_USERS t
 		WHERE account = #{account,jdbcType=VARCHAR}
 	</select>
-	
+
+	<!-- 根据用户id查找用户信息 -->
+	<!-- User findUserByLoginname(String name) -->
+	<select id="findUserIdByAccount" parameterType="String" resultType="String" >
+		SELECT
+		guid
+		FROM T_USERS t
+		WHERE account = #{account}
+	</select>
+
 </mapper>
