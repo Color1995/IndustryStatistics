@@ -12,10 +12,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="icon" href="${ctx}/statics/images/favicon.ico">
-    <link rel="stylesheet" href="${ctx}/lib/layui-v2.5.4/css/layui.css" media="all">
-    <link rel="stylesheet" href="css/layuimini.css" media="all">
-    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="icon" href="${ctx}/statics/layuimini/images/favicon.ico">
+    <link rel="stylesheet" href="${ctx}/statics/layuimini/lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="${ctx}/statics/layuimini/css/layuimini.css" media="all">
+    <link rel="stylesheet" href="${ctx}/statics/layuimini/lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
@@ -105,19 +105,19 @@
 <%--</script>--%>
 <!--百度统计代码-结束-->
 
-<script src="statics/lib/layui-v2.5.4/layui.js?v=1.0.4" charset="utf-8"></script>
-<script src="js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+<script src="${ctx}/statics/layuimini/lib/layui-v2.5.4/layui.js?v=1.0.4" charset="utf-8"></script>
+<%--<script src="${ctx}/statics/layuimini/js/lay-config.js?v=1.0.4" charset="utf-8"></script>--%>
 <script>
     layui.use(['element', 'layer', 'layuimini'], function () {
         var $ = layui.jquery,
             element = layui.element,
             layer = layui.layer;
 
-        layuimini.init('api/init.json');
+        layuimini.init('${ctx}/statics/layuimini/api/init.json');
 
         $('.login-out').on("click", function () {
             layer.msg('退出登录成功', function () {
-                window.location = '/page/login-1.html';
+                window.location = '${ctx}/system-index.html';
             });
         });
     });

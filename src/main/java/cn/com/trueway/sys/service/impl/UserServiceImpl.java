@@ -42,7 +42,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public String findUserIdByAccount(String account) {
 		String user_id = userMapper.findUserIdByAccount(account);
-		System.out.println("service : " +  user_id);
+		// System.out.println("service : " +  user_id);
 		return user_id;
 	}
 

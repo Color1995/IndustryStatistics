@@ -54,9 +54,8 @@ public class LoginFilter implements Filter {
         String user_account = (String) session.getAttribute("user_account");
         System.out.println(user_id + user_account);
         if(StringUtils.isNotEmpty(user_account)){
-            System.out.println("filter.do");
+            // 自定义加载 IUserService
             ServletContext context = request.getServletContext();
-
             ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(context);
             userService = ctx.getBean(IUserService.class);
             // 建议用新方法值查出一个Id值 优化
@@ -66,16 +65,15 @@ public class LoginFilter implements Filter {
                     filterChain.doFilter(request,response);
                 } else {
                     // 未登录，重定向到404，message:未登录, 界面两秒后跳出未登录。
-                    response.sendRedirect(request.getContextPath() + "/error/404.html");
+                    response.sendRedirect(request.getContextPath() + "/statics/error/404.html");
                 }
             }catch (NullPointerException e){
                 // TODO 插入log记录
-                response.sendRedirect(request.getContextPath() + "/error/404.html");
+                response.sendRedirect(request.getContextPath() + "/statics/error/404.html");
             }
-
         } else {
             // 未登录，重定向到404，message:未登录, 界面两秒后跳出未登录。
-            response.sendRedirect(request.getContextPath() + "/error/404.html");
+            response.sendRedirect(request.getContextPath() + "/statics/error/404.html");
         }
 
     }
