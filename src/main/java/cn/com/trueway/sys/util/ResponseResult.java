@@ -16,6 +16,7 @@ public class ResponseResult<T> implements Serializable{
 	public final static Integer STATE_ERROR = 0;
 
 	private Integer state;
+	private boolean flag;
 	private String message;
 	private T data;
 
@@ -34,6 +35,19 @@ public class ResponseResult<T> implements Serializable{
 		setMessage(message);
 	}
 
+	public ResponseResult(boolean flag, String message) {
+		super();
+		setFlag(flag);
+		setMessage(message);
+	}
+
+	public ResponseResult(Integer state, boolean flag, String message) {
+		super();
+		setState(state);
+		setFlag(flag);
+		setMessage(message);
+	}
+
 	public ResponseResult(Exception e){
 		super();
 		setState(STATE_ERROR);
@@ -46,6 +60,14 @@ public class ResponseResult<T> implements Serializable{
 
 	public void setState(Integer state) {
 		this.state = state;
+	}
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
 	}
 
 	public String getMessage() {

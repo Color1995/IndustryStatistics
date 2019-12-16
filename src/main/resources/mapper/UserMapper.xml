@@ -9,7 +9,7 @@
 	<select id="findUserByAccount" resultType="cn.com.trueway.sys.entity.User" >
 		SELECT
 		guid, t.ACCOUNT as account, t.USERNAME as username, t.PASSWORD as password
-		FROM T_USERS t
+		FROM SYS_USERS t
 		WHERE account = #{account,jdbcType=VARCHAR}
 	</select>
 
@@ -18,7 +18,7 @@
 	<select id="findUserIdByAccount" parameterType="String" resultType="String" >
 		SELECT
 		guid
-		FROM T_USERS t
+		FROM SYS_USERS t
 		WHERE account = #{account}
 	</select>
 

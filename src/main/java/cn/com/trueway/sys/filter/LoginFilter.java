@@ -4,6 +4,8 @@ import cn.com.trueway.sys.entity.User;
 import cn.com.trueway.sys.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +20,6 @@ import java.io.IOException;
 
 public class LoginFilter implements Filter {
 
-    @Autowired
     private IUserService userService;
 
     @Override
@@ -51,16 +52,27 @@ public class LoginFilter implements Filter {
         // 判断用户账号和id是否正确
         String user_id = (String) session.getAttribute("user_id");
         String user_account = (String) session.getAttribute("user_account");
+        System.out.println(user_id + user_account);
         if(StringUtils.isNotEmpty(user_account)){
             System.out.println("filter.do");
+            ServletContext context = request.getServletContext();
+
+            ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(context);
+            userService = ctx.getBean(IUserService.class);
             // 建议用新方法值查出一个Id值 优化
             String id = userService.findUserIdByAccount(user_account);
-            if (id != user_id) {
-                // 未登录，重定向到404，message:未登录, 界面两秒后跳出未登录。
+            try {
+                if (id.equals(user_id)) {
+                    filterChain.doFilter(request,response);
+                } else {
+                    // 未登录，重定向到404，message:未登录, 界面两秒后跳出未登录。
+                    response.sendRedirect(request.getContextPath() + "/error/404.html");
+                }
+            }catch (NullPointerException e){
+                // TODO 插入log记录
                 response.sendRedirect(request.getContextPath() + "/error/404.html");
-            } else {
-                filterChain.doFilter(request,response);
             }
+
         } else {
             // 未登录，重定向到404，message:未登录, 界面两秒后跳出未登录。
             response.sendRedirect(request.getContextPath() + "/error/404.html");

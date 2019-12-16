@@ -1,8 +1,11 @@
 package cn.com.trueway.sys.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import cn.com.trueway.sys.util.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,8 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.com.trueway.sys.entity.User;
 import cn.com.trueway.sys.service.IUserService;
-import cn.com.trueway.sys.util.BaseController;
-import cn.com.trueway.sys.util.ResponseResult;
+
+import java.io.FileNotFoundException;
+import java.util.Properties;
 
 /**
  * @author Color1995
@@ -36,19 +40,21 @@ public class UserController extends BaseController {
 	@Autowired
 	private IUserService userService;
 
+
 	/**
-	 *
+	 * 项目登录页
 	 * @param account
 	 * @param password
 	 * @param session
+	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value="/login.do", method={RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
-	public ResponseResult<Void> login(
+	public ResponseResult<Void> loginOld(
 			@RequestParam("account") String account,
 			@RequestParam("password") String password,
-			HttpSession session) {
+			HttpSession session, HttpServletRequest request) {
 
 		// 声明返回值
 		ResponseResult<Void> result = new ResponseResult<Void>();
@@ -61,27 +67,48 @@ public class UserController extends BaseController {
 			User user = userService.findUserByAccount(account);
 			// 判断密码是否相同
 			if(password.equals(user.getPassword())) {
-				result.setState(1);
+				result.setFlag(true);
+				result.setMessage("登录成功！");
 				// 将用户唯一id和账户名存入session
 				session.setAttribute("user_id", user.getGuid());
 				session.setAttribute("user_account", user.getAccount());
-				log.debug("登陆成功");
+				log.debug("登录成功");
 			}else {
-				result.setState(0);
+				result.setFlag(false);
 				result.setMessage("用户名或密码不正确！");
 				log.debug("用户名或密码不正确！");
 			}
 		} catch (Exception e) {
-			result.setState(ResponseResult.STATE_ERROR);
+			result.setFlag(false);
 			result.setMessage("用户名或密码不正确！");
+		} finally {
+			// 记录Ip模块
+			try {
+				Properties properties = PropertiesUtil.readPropertiesFile("application.properties");
+				String OpenIpSer = properties.getProperty("OpenIpSer");
+				if (OpenIpSer.equals("true")){
+					String IP = IPUtil2.getIpAddress(request);
+					String PIP = IPUtil2.getPublicIp();
+					System.out.println("IP: " + IP);
+					System.out.println("PIP: " + PIP);
+				}
+			} catch (FileNotFoundException e){
+				// TODO log 未发现 application.properties
+				System.out.println("未发现 application.properties");
+			}
+
 		}
 		return result;
 	}
 
-	@RequestMapping(value="/index-all.do")
+	/**
+	 * 项目首页
+	 * @return
+	 */
+	@RequestMapping(value="/index.do")
 	private String showHomePage() {
 
-		return "index-all";
+		return "index";
 	}
 
 }

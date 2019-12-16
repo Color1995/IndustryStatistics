@@ -7,10 +7,9 @@
  */
 package cn.com.trueway.sys.util;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 /**
  * 描述：TODO 配置文件工具类<br>
@@ -23,15 +22,22 @@ import java.util.Properties;
  * 版本：v1.0<br>
  * JDK版本：JDK1.6<br>
  */
+
+/**
+ * 重新编写
+ * 有两个 主要方法：
+ * 1.readPropertiesFile
+ * 2.
+ */
 public class PropertiesUtil {
 
 	// 配置文件根目录
 	public final static String DIR_PATH = "config";
 
 	/**
-	 * 
+	 *
 	 * 描述：读取配置文件<br>
-	 * 
+	 *
 	 * @param fileName
 	 * @return
 	 * @throws FileNotFoundException
@@ -45,9 +51,9 @@ public class PropertiesUtil {
 		Properties prop = new Properties();
 		InputStream stream = null;
 		// 读取config下的的properties文件
-		// String filePath = DIR_PATH + Filee.separator + fileName;
-		// stream = new BufferedInputStream(new FileInputStream(new File(filePath)));
-		stream = PropertiesUtil.class.getResourceAsStream("/" + fileName);
+		String filePath = DIR_PATH + File.separator + fileName;
+	//	stream = new BufferedInputStream(new FileInputStream(new File(filePath)));
+		stream = PropertiesUtil.class.getResourceAsStream("/" + filePath);
 		try {
 			prop.load(stream);
 			stream.close();
@@ -58,8 +64,19 @@ public class PropertiesUtil {
 	}
 
 	/**
+	 * 文件的路径在config下
+	 * 可修改类静态常量DIR_PATH路径
+	 * @param fileName 参数为点号前半段 如jdbc
+	 * @return
+	 */
+	public static ResourceBundle readPropByResourceBundle(String fileName){
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(DIR_PATH + File.separator + fileName);
+		return resourceBundle;
+	}
+
+	/**
 	 * 描述：测试<br>
-	 * 
+	 *
 	 * @param args
 	 *            void 作者:陈静<br>
 	 *            邮箱:c_jing1984@163.com<br>
