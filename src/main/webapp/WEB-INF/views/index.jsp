@@ -60,7 +60,7 @@
                         <a href="javascript:;" data-iframe-tab="page/user-password.html" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
                     </dd>
                     <dd>
-                        <a href="javascript:;" class="login-out">退出登录</a>
+                        <a href="${ctx}/user/tologout.do" class="login-out">退出登录</a>
                     </dd>
                 </dl>
             </li>
@@ -106,7 +106,7 @@
 <!--百度统计代码-结束-->
 
 <script src="${ctx}/statics/layuimini/lib/layui-v2.5.4/layui.js?v=1.0.4" charset="utf-8"></script>
-<%--<script src="${ctx}/statics/layuimini/js/lay-config.js?v=1.0.4" charset="utf-8"></script>--%>
+<script src="${ctx}/statics/layuimini/js/lay-config.js?v=1.0.4" charset="utf-8"></script>
 <script>
     layui.use(['element', 'layer', 'layuimini'], function () {
         var $ = layui.jquery,

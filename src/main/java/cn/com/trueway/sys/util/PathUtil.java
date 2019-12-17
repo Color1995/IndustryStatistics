@@ -274,8 +274,8 @@ public class PathUtil {
 	/**
 	 * 将一个文件复制到另外一个文件中
 	 * 
-	 * @param oldPath
-	 * @param newPath
+	 * @param oldfile
+	 * @param newfile
 	 */
 	public static void copyFile(File oldfile, File newfile) {
 		InputStream in = null;

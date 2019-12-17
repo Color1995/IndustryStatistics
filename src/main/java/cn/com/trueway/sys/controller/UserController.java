@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.com.trueway.sys.entity.User;
 import cn.com.trueway.sys.service.IUserService;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.FileNotFoundException;
+import java.util.Enumeration;
 import java.util.Properties;
 
 /**
@@ -96,10 +98,31 @@ public class UserController extends BaseController {
 				// TODO log 未发现 application.properties
 				System.out.println("未发现 application.properties");
 			}
-
+			// 获取session中所有的键值
+			Enumeration<?> enumeration = session.getAttributeNames();
+			// 遍历enumeration
+			while (enumeration.hasMoreElements()) {
+				// 获取session的属性名称
+				String name = enumeration.nextElement().toString();
+				// 根据键值取session中的值
+				Object value = session.getAttribute(name);
+				// 打印结果
+				System.out.println("name:" + name + ",value:" + value );
+			}
 		}
 		return result;
 	}
+
+
+	//用于退出页面
+	@RequestMapping("tologout")
+	public String toLogOut(HttpServletRequest request){
+		// 销毁session中的值
+		HttpSession session = request.getSession();
+		session.invalidate();
+		return "index";
+	}
+
 
 	/**
 	 * 项目首页

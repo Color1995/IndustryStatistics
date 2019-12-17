@@ -52,7 +52,7 @@ public class LoginFilter implements Filter {
         // 判断用户账号和id是否正确
         String user_id = (String) session.getAttribute("user_id");
         String user_account = (String) session.getAttribute("user_account");
-        System.out.println(user_id + user_account);
+        System.out.println("判断用户账号和id是否正确:" + user_id + user_account);
         if(StringUtils.isNotEmpty(user_account)){
             // 自定义加载 IUserService
             ServletContext context = request.getServletContext();
@@ -73,6 +73,7 @@ public class LoginFilter implements Filter {
             }
         } else {
             // 未登录，重定向到404，message:未登录, 界面两秒后跳出未登录。
+            System.out.println("重定向");
             response.sendRedirect(request.getContextPath() + "/statics/error/404.html");
         }
 
