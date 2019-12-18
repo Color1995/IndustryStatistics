@@ -1,0 +1,30 @@
+{
+  menupath=null,
+  menufaterid=D3410DB6-0469-44DF-ACFA-D37ABBC87666,
+  menuextlinks=0,
+  menuid=5B8A0BCE-9F4A-47F8-B43E-6047CA703628,
+  menuname=类别设置,
+  menutype=1,
+  menuurl=rybdController/toRylbManageList.do,
+  menusort=5
+},
+{
+menupath=null,
+menufaterid=D3410DB6-0469-44DF-ACFA-D37ABBC87666,
+menuextlinks=0,
+menuid=0D5B57FB-7E57-45EF-B56D-CDBE4941ED9D,
+menuname=类别字典,
+menutype=1,
+menuurl=rybdController/toRylbList.do,
+menusort=3
+},
+{
+menupath=null,
+menufaterid=D3410DB6-0469-44DF-ACFA-D37ABBC87666,
+menuextlinks=0,
+menuid=F1D83AAA-DAB4-4018-A66E-12F4E3E97536,
+menuname=权限配置,
+menutype=1,
+menuurl=rybdRoleController/getRybdRoleList.do,
+menusort=1
+}

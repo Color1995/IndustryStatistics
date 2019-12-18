@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.com.trueway.sys.mapper.MenuMapper">
+
+    <!-- 根据用户account查找用户信息 -->
+    <!-- public List<Map<String, Object>> getMenuByUserId(String menuId); -->
+    <select id="getMenuByUserId" parameterType="String" resultType="java.util.HashMap">
+        SELECT DISTINCT t.menu_id,
+        t.menu_fater_id,
+        t.menu_name,
+        t.menu_url,
+        t.menu_type,
+        t.menu_sort,
+        t.menu_path,
+        t.menu_extlinks
+        FROM t_sys_menu t
+        WHERE
+        t.menu_status = 1
+        AND t.menu_rank = 0
+        <if test="menuId != null and menuId != ''">
+            and t.menu_id =
+        </if>
+        AND (t.menu_fater_id IS NULL OR t.menu_fater_id = '')
+        ORDER BY t.menu_sort desc
+    </select>
+
+    <!--  -->
+    <!-- List<Map<String, Object>> getChildMenuByFid(String menuFaterId, String userId, String deptId) -->
+    <select id="getChildMenuByFid" parameterType="String" resultType="java.util.HashMap">
+		select distinct t.menu_id,
+		t.menu_fater_id,
+		t.menu_name,
+		t.menu_url,
+		t.menu_type,
+		t.menu_sort,
+		t.menu_path,
+		t.menu_extlinks
+		from t_sys_menu t
+		join t_sys_role_menu rm on rm.menu_id=t.menu_id
+		join t_sys_role r on r.role_id=rm.role_id
+		join t_sys_role_user ru on ru.role_id=rm.role_id
+		where r.role_status= 1  and  ru.user_id= #{userId} and t.menu_status = 1 and t.menu_rank= 0  and t.menu_fater_id = #{menuFaterId} and ru.dept_id= #{deptId} order by t.menu_fater_id ,t.menu_sort  desc
+	</select>
+
+</mapper>

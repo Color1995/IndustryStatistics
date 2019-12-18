@@ -108,12 +108,24 @@
 <script src="${ctx}/statics/layuimini/lib/layui-v2.5.4/layui.js?v=1.0.4" charset="utf-8"></script>
 <script src="${ctx}/statics/layuimini/js/lay-config.js?v=1.0.4" charset="utf-8"></script>
 <script>
-    layui.use(['element', 'layer', 'layuimini'], function () {
+
+    layui.use([ 'layer', 'layuimini'], function () {
         var $ = layui.jquery,
             element = layui.element,
             layer = layui.layer;
 
-        layuimini.init('${ctx}/statics/layuimini/api/init.json');
+    //    layuimini.init('${ctx}/statics/layuimini/api/init.json');
+        $.getJSON('${ctx}/statics/layuimini/api/init.json', function (data, status) {
+            if (data == null) {
+                layuimini.msg_error('暂无菜单信息');
+            } else {
+                layuimini.initMenu(data.menuInfo);
+                console.info(data.menuInfo)
+            }
+        }).fail(function () {
+            layuimini.msg_error('菜单接口有误');
+        });
+
 
         $('.login-out').on("click", function () {
             layer.msg('退出登录成功', function () {
@@ -121,6 +133,7 @@
             });
         });
     });
+
 </script>
 </body>
 </html>

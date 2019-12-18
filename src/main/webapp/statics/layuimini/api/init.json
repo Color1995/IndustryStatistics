@@ -9,7 +9,7 @@
   },
   "logoInfo": {
     "title": "行业数据统计",
-    "image": "${ctx}/statics/layuimini/images/logo.png",
+    "image": "statics/layuimini/images/logo.png",
     "href": ""
   },
   "menuInfo": {
