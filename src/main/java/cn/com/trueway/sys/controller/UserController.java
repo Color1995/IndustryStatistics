@@ -88,7 +88,7 @@ public class UserController extends BaseController {
 			}else {
 				result.setFlag(false);
 				result.setMessage("用户名或密码不正确！");
-				log.debug("用户名或密码不正确！");
+				//log.debug("用户名或密码不正确！");
 			}
 		} catch (Exception e) {
 			System.out.println(e);
