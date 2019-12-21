@@ -4,14 +4,27 @@
 
 <mapper namespace="cn.com.trueway.sys.mapper.UserMapper">
 
+
 	<!-- 根据用户account查找用户信息 -->
 	<!-- User findUserByLoginname(String account) -->
 	<select id="findUserByAccount" resultType="cn.com.trueway.sys.entity.User" >
 		SELECT
-		guid, t.ACCOUNT as account, t.USERNAME as username, t.PASSWORD as password
+		guid, t.ACCOUNT as account,
+		t.USERNAME as username, t.PASSWORD as password,
+		t.ORG_GUID as orgGuid, t.ORG_NAME as orgName
 		FROM SYS_USERS t
 		WHERE account = #{account,jdbcType=VARCHAR}
 	</select>
+
+
+		<!-- 使用自定义结果集类型 -->
+		<resultMap type="cn.com.trueway.sys.entity.User" id="UserResult">
+		<!-- property是com.pojo.MapUser类中的属性-->
+		<!-- column是查询结果的列名，可以来自不同的表 -->
+		<!--	<id property="m_uid" column="uid"/>	-->
+		<result property="m_uname" column="uname"/>
+		<result property="m_usex" column="usex"/>
+		</resultMap>
 
 	<!-- 根据用户id查找用户信息 -->
 	<!-- User findUserByLoginname(String name) -->

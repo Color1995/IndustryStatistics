@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 
 import cn.com.trueway.sys.util.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,15 +14,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.com.trueway.sys.entity.User;
 import cn.com.trueway.sys.service.IUserService;
-import org.springframework.web.servlet.ModelAndView;
+import cn.com.trueway.sys.service.IMenuService;
 
 import java.io.FileNotFoundException;
 import java.util.Enumeration;
+import java.util.Map;
 import java.util.Properties;
 
 /**
  * @author Color1995
- * @email midwayking@163.com
+ *  email midwayking@163.com
  * @time 2019.12.15 01:16
  * @notes 重写
  */
@@ -42,6 +42,9 @@ public class UserController extends BaseController {
 	@Autowired
 	private IUserService userService;
 
+	@Autowired
+	private IMenuService menuService;
+
 
 	/**
 	 * 项目登录页
@@ -53,7 +56,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value="/login.do", method={RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
-	public ResponseResult<Void> loginOld(
+	public ResponseResult<Void> login(
 			@RequestParam("account") String account,
 			@RequestParam("password") String password,
 			HttpSession session, HttpServletRequest request) {
@@ -66,38 +69,47 @@ public class UserController extends BaseController {
 		String user_account = account;
 		String user_password = password;
 		try {
-			User user = userService.findUserByAccount(account);
+			User user = userService.findUserByAccount(user_account);
 			// 判断密码是否相同
-			if(password.equals(user.getPassword())) {
+			if(user_password.equals(user.getPassword())) {
 				result.setFlag(true);
 				result.setMessage("登录成功！");
 				// 将用户唯一id和账户名存入session
 				session.setAttribute("user_id", user.getGuid());
 				session.setAttribute("user_account", user.getAccount());
-				log.debug("登录成功");
+				session.setAttribute("org_guid",user.getOrgGuid());
+				session.setAttribute("org_name",user.getOrgName());
+				System.out.println("登录成功");
+
+				//
+				Map<String, Object> menuMap = menuService.getMenusById(user.getGuid(),user.getOrgGuid());
+				System.out.println("menu:" + menuMap.size());
+
 			}else {
 				result.setFlag(false);
 				result.setMessage("用户名或密码不正确！");
 				log.debug("用户名或密码不正确！");
 			}
 		} catch (Exception e) {
+			System.out.println(e);
+			System.out.println("进入");
 			result.setFlag(false);
 			result.setMessage("用户名或密码不正确！");
 		} finally {
-			// 记录Ip模块
-			try {
-				Properties properties = PropertiesUtil.readPropertiesFile("application.properties");
-				String OpenIpSer = properties.getProperty("OpenIpSer");
-				if (OpenIpSer.equals("true")){
-					String IP = IPUtil2.getIpAddress(request);
-					String PIP = IPUtil2.getPublicIp();
-					System.out.println("IP: " + IP);
-					System.out.println("PIP: " + PIP);
-				}
-			} catch (FileNotFoundException e){
-				// TODO log 未发现 application.properties
-				System.out.println("未发现 application.properties");
-			}
+//			// 记录Ip模块
+//			try {
+//				Properties properties = PropertiesUtil.readPropertiesFile("application.properties");
+//				String OpenIpSer = properties.getProperty("OpenIpSer");
+//				if (OpenIpSer.equals("true")){
+//					String IP = IPUtil2.getIpAddress(request);
+//					String PIP = IPUtil2.getPublicIp();
+//					System.out.println("IP: " + IP);
+//					System.out.println("PIP: " + PIP);
+//				}
+//			} catch (FileNotFoundException e){
+//				// TODO log 未发现 application.properties
+//				System.out.println("未发现 application.properties");
+//			}
 			// 获取session中所有的键值
 			Enumeration<?> enumeration = session.getAttributeNames();
 			// 遍历enumeration
@@ -107,7 +119,7 @@ public class UserController extends BaseController {
 				// 根据键值取session中的值
 				Object value = session.getAttribute(name);
 				// 打印结果
-				System.out.println("name:" + name + ",value:" + value );
+				System.out.println("key:" + name + ",value:" + value );
 			}
 		}
 		return result;

@@ -6,7 +6,7 @@ public class Menu implements Serializable {
 
     /*主键id,uuid32位*/
     private String guid;
-    
+
     private String name;
     private String parent_id;
     private String url;

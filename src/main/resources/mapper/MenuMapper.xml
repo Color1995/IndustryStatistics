@@ -4,44 +4,70 @@
 
 <mapper namespace="cn.com.trueway.sys.mapper.MenuMapper">
 
-    <!-- 根据用户account查找用户信息 -->
-    <!-- public List<Map<String, Object>> getMenuByUserId(String menuId); -->
-    <select id="getMenuByUserId" parameterType="String" resultType="java.util.HashMap">
-        SELECT DISTINCT t.menu_id,
-        t.menu_fater_id,
-        t.menu_name,
-        t.menu_url,
+    <!--  获取所有一级菜单  -->
+    <!-- List<Map<String, Object>> getAllParentMenuByFid(String menuId) -->
+    <select id="getAllParentMenuByFid" resultType="java.util.HashMap">
+        select t.MENU_GUID as menuId,
+        t.MENU_PARENT_ID parentID,
+        t.menu_name as menuName,
+        t.menu_url menuUrl,
         t.menu_type,
         t.menu_sort,
         t.menu_path,
-        t.menu_extlinks
-        FROM t_sys_menu t
+        t.menu_extlinks,
+        t.MENU_SIMPLE_NAME,
+        t.MENU_PATH
+        from SYS_MENU t
+        where t.MENU_STATUS = 0
+
+            and t.MENU_PARENT_ID is null
+            and t.MENU_RANK = 0
+
+       order by t.menu_sort desc
+    </select>
+
+    <!-- 根据组织机构Id获取所有菜单合集 -->
+    <!-- public List<Map<String, Object>> getMenus(String menuId, String orgId); -->
+    <select id="getMenus" parameterType="String" resultType="java.util.HashMap">
+        SELECT
+        t.ORG_GUID orgGuid,
+        t.ORG_NAME orgName,
+        t.ORG_CODE orgCode,
+        t.ORG_STATUS orgStatus
+        t.MENU_GUID menuGuid,
+        t.MENU_PARENT_ID menuParentId,
+        t.MENU_NAME menuName,
+        t.MENU_URL menuUrl
+        FROM
+        SYS_ORG_MENU t ;
         WHERE
-        t.menu_status = 1
-        AND t.menu_rank = 0
-        <if test="menuId != null and menuId != ''">
-            and t.menu_id =
-        </if>
-        AND (t.menu_fater_id IS NULL OR t.menu_fater_id = '')
-        ORDER BY t.menu_sort desc
+        t.menu_status = 0
+        AND t.ORG_STATUS = 0
+        AND t.MENU_GUID = #{menuId}
+        AND t.ORG_GUID = #{orgId}
+        ORDER BY
+        t.menu_sort DESC
+        <!-- (t.menu_fater_id IS NULL OR t.menu_fater_id = '') -->
     </select>
 
     <!--  -->
-    <!-- List<Map<String, Object>> getChildMenuByFid(String menuFaterId, String userId, String deptId) -->
-    <select id="getChildMenuByFid" parameterType="String" resultType="java.util.HashMap">
-		select distinct t.menu_id,
-		t.menu_fater_id,
-		t.menu_name,
-		t.menu_url,
+    <!-- List<Map<String, Object>> getParentMenuByFid(String menuId) -->
+    <select id="getParentMenuByFid" parameterType="String" resultType="java.util.HashMap">
+		select distinct t.MENU_GUID as menuid,
+		t.MENU_PARENT_ID,
+		t.menu_name as menuName,
+		t.menu_url menuUrl,
 		t.menu_type,
 		t.menu_sort,
 		t.menu_path,
-		t.menu_extlinks
-		from t_sys_menu t
-		join t_sys_role_menu rm on rm.menu_id=t.menu_id
-		join t_sys_role r on r.role_id=rm.role_id
-		join t_sys_role_user ru on ru.role_id=rm.role_id
-		where r.role_status= 1  and  ru.user_id= #{userId} and t.menu_status = 1 and t.menu_rank= 0  and t.menu_fater_id = #{menuFaterId} and ru.dept_id= #{deptId} order by t.menu_fater_id ,t.menu_sort  desc
+		t.menu_extlinks,
+		t.MENU_SIMPLE_NAME,
+		t.MENU_PATH
+		from SYS_MENU t
+		where t.MENU_STATUS = 0  and  t.MENU_PARENT_ID= #{parentId}
+        and t.MENU_RANK = 0
+		order by t.menu_sort  desc
 	</select>
+
 
 </mapper>
